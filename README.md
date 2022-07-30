@@ -1,7 +1,7 @@
 # tecweb-Scambily
 Progetto di tecnologie web dell' Anno accademico 2021/2022 realizzato da Janath Uthayakumar
 
-++++++++++++++++++++++++++++++++++++++++++++++++++    Idea di base +++++++++++++++++++++++++++++++++++++++++++++
+++++++++++++++++++++++++++++++++++++++++++++++++++    Idea di base
 
 
 differenziare le mie 3 categorie di utenti
@@ -30,5 +30,4 @@ funzionalitá del sito:
 -staff puó fare moderazione del sito ( eliminare eventuali recensioni e gestire le segnalazioni)
 
 
-++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
