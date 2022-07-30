@@ -2,6 +2,8 @@
 Progetto di tecnologie web dell' Anno accademico 2021/2022 realizzato da Janath Uthayakumar
 
 ++++++++++++++++++++++++++++++++++++++++++++++++++    Idea di base +++++++++++++++++++++++++++++++++++++++++++++
+
+
 differenziare le mie 3 categorie di utenti
 	utenti anonimi = funzionalitá di base visualizzare 
 	utenti registrati = possibilitá di vendere e comprare
