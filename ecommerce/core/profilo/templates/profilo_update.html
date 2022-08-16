@@ -1,0 +1,12 @@
+{% extends "basebs.html" %}
+{% load crispy_forms_tags %}
+
+{% block title %}Aggiorna il tuo Profilo{% endblock %}
+{% block content %}
+<form method="POST"  enctype="multipart/form-data">
+    {% csrf_token %}
+
+    {{ form | crispy }}
+    <input type="submit" value="Invia"  class="btn btn-primary" >
+</form>
+{% endblock %}

@@ -1,0 +1,41 @@
+{% extends "basebs.html" %}
+
+
+{% block title %} il tuo Profilo{% endblock %}
+{% block content %}
+
+
+
+{% for l in object_list %}
+<div class="card" style="width: 40rem;">
+     
+ 
+    
+    <img src="{{ l.immagine_profilo.url }}" alt="immagine_profilo" style="width:100%">
+  
+    <div class="card-body">
+      <h5 class="card-title">Profilo {{l.user.username}}</h5>
+      <p class="card-text">{{l.bio }} </p>
+    </div>
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item">regione  : {{l.regione}}</li>
+      <li class="list-group-item">citta    : {{l.cap}}</li>
+      <li class="list-group-item">cap      : {{l.citta}}</li>
+      <li class="list-group-item">indirizzo: {{l.indirizzo}}</li>
+  
+    </ul>
+    <div class="card-body">
+      
+      <a href="{% url 'profilo:profilo_update' pk=l.id %}" class="hover-link" >Modifca qui il tuo profilo !</a>
+    </div>
+  </div>
+{% empty %}
+    {% if  user.is_authenticated    %}
+    <div class="card" style="width: 18rem;">
+
+      <a href="{% url 'profilo:profilo_create' %}" class="hover-link" >non hai mai creato il tuo profilo, crealo !</a>
+
+    </div>
+    {% endif %}
+{% endfor %}
+{% endblock %}
