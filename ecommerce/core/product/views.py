@@ -2,6 +2,7 @@ from django.views.generic.list import ListView
 from django.views.generic.edit import CreateView, UpdateView
 from .models import Prodotto
 from django.urls import reverse_lazy
+from .forms import ProdottoCreateForm
 
 
 # Create your views here.
@@ -32,20 +33,15 @@ class listaprodottoall(ListView):
 
 class ProdottoCreate(CreateView):
     model = Prodotto
-    fields = ('profilo', 'immagine_copertina', 'nome', 'prezzo', 'stato_articolo', 'descrizione')
+    form_class = ProdottoCreateForm
     template_name = 'prodotto_create.html'
     success_url = reverse_lazy("prodotto:prodotto_view")
 
-    # hack per perfezionisti con una deadline
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs.update({'user': self.request.user})
+        return kwargs
+
     def form_valid(self, form):
         form.instance.user = self.request.user
         return super().form_valid(form)
-
-
-class creaprodotto(CreateView):
-    model = Prodotto
-    template_name = 'add_prodotto.html'
-    fields = '__all__'
-
-    def get_absolute_url(self):
-        return reverse_lazy("prodotto:prodotto_view_all")

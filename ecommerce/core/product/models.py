@@ -24,6 +24,8 @@ class Prodotto(models.Model):
     prezzo = models.DecimalField(max_digits=8, decimal_places=2)
     stato_articolo = models.CharField(max_length=2, choices=scelta_stato)
     descrizione = models.CharField(max_length=1000)
+    disponibilita = models.BooleanField(default='True')
+
 
     def __str__(self):
         field_values = []
