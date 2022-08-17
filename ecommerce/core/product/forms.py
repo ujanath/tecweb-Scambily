@@ -7,7 +7,7 @@ from .models import Prodotto
 class ProdottoCreateForm(forms.ModelForm):
     class Meta:
         model = Prodotto
-        fields = [ 'profilo', 'immagine_copertina', 'prezzo', 'stato_articolo', 'descrizione']
+        fields = [ 'nome', 'profilo', 'immagine_copertina', 'prezzo', 'stato_articolo', 'descrizione']
 
 
     def __init__(self, *args, **kwargs):

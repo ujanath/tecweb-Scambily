@@ -1,0 +1,15 @@
+{% extends "basebs.html" %}
+{% block title %}Elimina carta {% endblock %}
+{% block content %}
+
+<h3>Eliminazione bambino</h3>
+<div class="mb-3 mt-3">
+    <form method="post">{% csrf_token %}
+        <p>Sei sicuro di voler eliminare dal sistema  "?</p>
+        <p>
+
+        </p>
+        <input type="submit" value="Conferma" class="btn btn-danger">
+    </form>
+</div>
+{% endblock %}

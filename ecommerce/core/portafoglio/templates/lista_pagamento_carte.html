@@ -1,0 +1,19 @@
+{% extends "basebs.html" %}
+
+
+{% block title %} il tuo Profilo{% endblock %}
+{% block content %}
+<ul>
+    <h1>The Main Languages of the Web</h1>
+</ul>
+
+
+<ul class="button">
+  <a href="{% url 'profilo:profilo_view' %}" class="hover-link" >torna al tuo profilo </a>
+
+</ul>
+
+{% for l in object_list %}
+
+{% endfor %}
+{% endblock %}
