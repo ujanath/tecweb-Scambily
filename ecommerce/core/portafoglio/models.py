@@ -21,7 +21,7 @@ class metodo_pagamento_carta(models.Model):
 
 
 class metodo_pagamento_paypal(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
 
     paypal_email    = models.CharField(max_length=50)
     paypal_password = models.CharField(max_length=50)

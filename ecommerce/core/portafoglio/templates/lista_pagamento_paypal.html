@@ -4,42 +4,43 @@
 {% block title %} il tuo Profilo{% endblock %}
 {% block content %}
 <ul>
-    <h1>The Main Languages of the Web</h1>
+    <h1>Le tue Carte Collegate</h1>
 </ul>
 
 
-<ul class="button">
-  <a href="{% url 'profilo:profilo_view' %}" class="hover-link" >torna al tuo profilo </a>
 
-</ul>
+
+    <div class="alert alert-secondary" role="alert">
+  Torna al tuo   <a href="{% url 'profilo:profilo_view' %}" class="alert-link">Profilo</a>
+    </div>
+
+
 
 {% for l in object_list %}
-<div class="card" style="width: 40rem;">
-     
 
-  
-    <div class="card-body">
-      <h5 class="card-title">  {{l.user.username}}</h5>
-      <p class="card-text">{{ l }} </p>
+    <ul class="list-group">
+  <li class="list-group-item">il codice della tua carta é {{ l.paypal_email }}</li>
+
+
+</ul>
+
+
+      <div class="alert alert-warning" role="alert">
+            <a href="{% url 'portafoglio:update_pp' pk=l.id %}" class="alert-link">Modifica il tuo account</a>
+        </div>
+      <div class="alert alert-danger" role="alert">
+            <a href="{% url 'portafoglio:delete_pp' pk=l.id %}" class="alert-link">Scollega il tuo account</a>
+        </div>
+<hr>
+
     </div>
-    <ul class="list-group list-group-flush">
-      <li class="list-group-item">email         : {{l.paypal_email}}</li>
 
-
-
-    </ul>
-    <div class="card-body">
-      
-      <a href="{% url 'prodotto:prodotto_update' pk=l.id %}" class="hover-link" >vuoi modificare questo prodotto ? !</a>
-    </div>
-  </div>
 {% empty %}
-    {% if  user.is_authenticated    %}
-    <div class="card" style="width: 18rem;">
 
-      <a href="{% url 'prodotto:prodotto_create' %}" class="hover-link" >metti in vendita il tuo primo articolo !</a>
-
+      <div class="alert alert-secondary" role="alert">
+     <a href="{% url 'portafoglio:create_pp' %}" class="alert-link">Prima volta ?, aggiungi il tuo account </a>
     </div>
-    {% endif %}
+
+
 {% endfor %}
 {% endblock %}

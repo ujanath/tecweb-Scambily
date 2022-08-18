@@ -9,6 +9,7 @@ urlpatterns = [
     path("create", login_required(ProdottoCreate.as_view()), name="prodotto_create"),
     path("<int:pk>", login_required(ProdottoUpdate.as_view()), name="prodotto_update"),
     path("all", login_required(listaprodottoall.as_view()), name="prodotto_view_all"),
+    path("delete/<int:pk>", login_required(DeleteProdotto.as_view()), name="prodotto_delete"),
 
 
 ]

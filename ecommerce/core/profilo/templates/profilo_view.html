@@ -40,10 +40,10 @@
   vuoi cambiare qualcosa del tuo profilo?  <a href="{% url 'profilo:profilo_update' pk=l.id %}" class="alert-link">Modifca qui il tuo profilo</a>
     </div>
     <div class="alert alert-primary" role="alert">
-  vuoi aggiungere o modificare le tue carte per il pagamento ? <a href="{% url 'portafoglio:lista_pp'  %}" class="alert-link">Aggiorna le tue carte</a>
+  vuoi aggiungere o modificare le tue carte per il pagamento ? <a href="{% url 'portafoglio:lista_carte'  %}" class="alert-link">Aggiorna le tue carte</a>
     </div>
     <div class="alert alert-secondary" role="alert">
-  vuoi collegare o scolleggare il tuo account PayPal ? <a href="{% url 'portafoglio:lista_carte' %}" class="alert-link">Aggiorna il tuo account PayPal</a>
+  vuoi collegare o scolleggare il tuo account PayPal ? <a href="{% url 'portafoglio:lista_pp' %}" class="alert-link">Aggiorna il tuo account PayPal</a>
     </div>
 
 {% empty %}
