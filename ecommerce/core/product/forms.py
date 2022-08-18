@@ -1,6 +1,6 @@
 from django import forms
 from django.http import request
-from .models import Prodotto
+from .models import Prodotto , Prodotto_ordine
 
 
 
@@ -26,4 +26,16 @@ class ProdottoCreateForm(forms.ModelForm):
 
 
 
-#$class OrdinaProdotto(forms.ModelForm):
+
+class  OrdineCreateForm(forms.ModelForm):
+    class Meta:
+        model = Prodotto_ordine
+
+        fields = [ 'carta'  , 'indirizzo' ]
+
+    def __init__(self, *args, **kwargs):
+        user = kwargs.pop('user', None)
+        prodotto = kwargs.pop('prodotto', None)
+        super().__init__(*args, **kwargs)
+        self.fields['carta'].queryset = self.fields['carta'].queryset.filter(user=user)
+

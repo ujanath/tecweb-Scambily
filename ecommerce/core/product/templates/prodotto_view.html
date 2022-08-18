@@ -38,6 +38,9 @@
       <div class="alert alert-danger" role="alert">
             <a href="{% url 'prodotto:prodotto_delete' pk=l.id %}" class="alert-link">Elimina questo prodotto</a>
         </div>
+        <div class="alert alert-success" role="alert">
+            <a href="{% url 'prodotto:ordine_create' pk=l.id %}" class="alert-link">ordina qualcosa </a>
+   </div>
   </div>
 
 

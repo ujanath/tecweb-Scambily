@@ -27,7 +27,7 @@
     <div class="card-body">
 
       <a href="{% url 'profilo:profilo_update' pk=l.id %}" class="hover-link" >Modifca qui il tuo profilo !</a>
-        <a href="{% url 'portafoglio:lista_pp'  %}" class="hover-link" >il tuo pagamento con paypal </a>
+
             <a href="{% url 'portafoglio:lista_carte' %}" class="hover-link" >il tuo pagamento con carta </a>
 
     </div>
@@ -42,9 +42,7 @@
     <div class="alert alert-primary" role="alert">
   vuoi aggiungere o modificare le tue carte per il pagamento ? <a href="{% url 'portafoglio:lista_carte'  %}" class="alert-link">Aggiorna le tue carte</a>
     </div>
-    <div class="alert alert-secondary" role="alert">
-  vuoi collegare o scolleggare il tuo account PayPal ? <a href="{% url 'portafoglio:lista_pp' %}" class="alert-link">Aggiorna il tuo account PayPal</a>
-    </div>
+
 
 {% empty %}
     {% if  user.is_authenticated    %}

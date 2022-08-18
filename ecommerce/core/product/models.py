@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from profilo.models import Profilo
+from portafoglio.models import metodo_pagamento_carta
 
 # Create your models here.
 
@@ -22,7 +23,11 @@ scelta_categorie = (
     ('model', 'modellini')
 
 )
-
+scelta_stato = (
+    ('1', 'in sviluppo'),
+    ('2', 'spedito'),
+    ('3', 'consegnato')
+)
 
 class Prodotto(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -48,19 +53,12 @@ class Prodotto(models.Model):
         verbose_name_plural = "Prodotti"
 
 
-scelta_pagamento = (
-    ('1', 'carta'),
-    ('2', 'paypal'),
-    ('3', 'persona')
-)
-
-
-#TODO finire ordine
-
-class Ordine():
+class Prodotto_ordine(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    prodotto = models.OneToOneField(Prodotto,  on_delete=models.CASCADE)
-    scelta_metodo = models.CharField(max_length=1, choices=scelta_pagamento)
+    carta = models.ForeignKey(metodo_pagamento_carta, on_delete=models.CASCADE)
+    prodotto = models.OneToOneField(Prodotto, on_delete=models.CASCADE)
+    datetime = models.DateTimeField
+    indirizzo = models.CharField(max_length=100)
 
 
 

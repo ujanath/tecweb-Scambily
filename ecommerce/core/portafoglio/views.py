@@ -11,11 +11,6 @@ class UpdateCarta(UpdateView):
     success_url = reverse_lazy("profilo:profilo_view")
 
 
-class UpdatePaypal(UpdateView):
-    model = metodo_pagamento_paypal
-    template_name = 'paypal_update.html'
-    fields = ('paypal_email', 'paypal_password')
-    success_url = reverse_lazy("profilo:profilo_view")
 
 
 # Create your views here.
@@ -28,13 +23,6 @@ class listacarte(ListView):
         return self.model.objects.filter(user=self.request.user)
 
 
-class listapaypal(ListView):
-    model = metodo_pagamento_paypal
-
-    template_name = 'lista_pagamento_paypal.html'
-
-    def get_queryset(self):
-        return self.model.objects.filter(user=self.request.user)
 
 
 class DeleteCarta(DeleteView):
@@ -42,11 +30,6 @@ class DeleteCarta(DeleteView):
     template_name = 'delete.html'
     success_url = reverse_lazy("profilo:profilo_view")
 
-
-class DeletePp(DeleteView):
-    model = metodo_pagamento_paypal
-    template_name = 'delete.html'
-    success_url = reverse_lazy("profilo:profilo_view")
 
 
 class CreateCarta(CreateView):
@@ -59,13 +42,3 @@ class CreateCarta(CreateView):
         form.instance.user = self.request.user
         return super().form_valid(form)
 
-
-class CreatePaypal(CreateView):
-    model = metodo_pagamento_paypal
-    template_name = 'create_paypal.html'
-    fields = ('paypal_email', 'paypal_password')
-    success_url = reverse_lazy("profilo:profilo_view")
-
-    def form_valid(self, form):
-        form.instance.user = self.request.user
-        return super().form_valid(form)
