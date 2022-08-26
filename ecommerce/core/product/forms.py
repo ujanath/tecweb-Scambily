@@ -35,7 +35,6 @@ class  OrdineCreateForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         user = kwargs.pop('user', None)
-        prodotto = kwargs.pop('prodotto', None)
         super().__init__(*args, **kwargs)
         self.fields['carta'].queryset = self.fields['carta'].queryset.filter(user=user)
 

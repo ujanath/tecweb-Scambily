@@ -1,7 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
-from profilo.models import Profilo
-from portafoglio.models import metodo_pagamento_carta
+from profilo.models import *
+from portafoglio.models import *
+from django.utils import timezone
 
 # Create your models here.
 
@@ -23,7 +24,7 @@ scelta_categorie = (
     ('model', 'modellini')
 
 )
-scelta_stato = (
+scelta_stato_spedizione = (
     ('1', 'in sviluppo'),
     ('2', 'spedito'),
     ('3', 'consegnato')
@@ -42,6 +43,9 @@ class Prodotto(models.Model):
     disponibilita = models.BooleanField(default='True')
     categoria = models.CharField(max_length=5, choices=scelta_categorie)
 
+    def sono_stato_comprato(self):
+        self.disponibilita = False
+        self.save()
 
     def __str__(self):
         field_values = []
@@ -52,14 +56,16 @@ class Prodotto(models.Model):
     class Meta:
         verbose_name_plural = "Prodotti"
 
+class Prdotto_Tag(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    prodotto = models.ForeignKey(Prodotto, on_delete=models.CASCADE)
+    tag = models.CharField(max_length=100 , null= False)
+
 
 class Prodotto_ordine(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     carta = models.ForeignKey(metodo_pagamento_carta, on_delete=models.CASCADE)
     prodotto = models.OneToOneField(Prodotto, on_delete=models.CASCADE)
-    datetime = models.DateTimeField
+    dop = models.DateTimeField(default=timezone.now)
     indirizzo = models.CharField(max_length=100)
-
-
-
 

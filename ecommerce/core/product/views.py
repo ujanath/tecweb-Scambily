@@ -24,13 +24,6 @@ class listaprodotto(ListView):
         return self.model.objects.filter(user=self.request.user)
 
 
-class listaprodottoall(ListView):
-    model = Prodotto
-    template_name = 'prodotto_view.html'
-
-    def get_queryset(self):
-        return self.model.objects.all()
-
 
 class ProdottoCreate(CreateView):
     model = Prodotto
@@ -62,7 +55,7 @@ class OrdineCreate(CreateView):
     def form_valid(self, form):
         form.instance.user = self.request.user
         prodotto =  Prodotto.objects.get(pk=self.kwargs['pk'])
-        print(str(prodotto))
+
         self.object = form.save(commit=False)
         self.object.prodotto = prodotto
         self.object.save()
@@ -75,3 +68,9 @@ class DeleteProdotto(DeleteView):
     success_url = reverse_lazy("prodotto:prodotto_view")
 
 
+class listaprodottoall(ListView):
+    model = Prodotto
+    template_name = 'prodotto_view_all.html'
+
+    def get_queryset(self):
+        return self.model.objects.all()

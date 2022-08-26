@@ -1,0 +1,53 @@
+{% extends "basebs.html" %}
+
+
+{% block title %} lista di tutti i prodotti{% endblock %}
+{% block content %}
+
+
+
+
+{% for l in object_list   %}
+
+    {% if l.disponibilita == True %}
+                 <div class="card" style="width: 40rem;">
+
+
+
+                <img src="{{ l.immagine_copertina.url }}" alt="immagine_copertina" style="width:100%">
+
+                <div class="card-body">
+                  <h5 class="card-title">prodotti di  {{l.user.username}}</h5>
+                  <p class="card-text">{{l.bio }} </p>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">categoria  : {{l.categoria}}</li>
+                  <li class="list-group-item">nome del articolo   : {{l.nome}}</li>
+                  <li class="list-group-item">citta del venditore   : {{l.profilo.cap}}</li>
+                  <li class="list-group-item">cap del venditore     : {{l.profilo.citta}}</li>
+                  <li class="list-group-item">prezzo   : {{l.profilo.indirizzo}}</li>
+                  <li class="list-group-item">descrizione   : {{l.descrizione}}</li>
+                  <li class="list-group-item">stato del articolo   : {{l.stato_articolo}}</li>
+
+                </ul>
+                  <div class="alert alert-warning" role="alert">
+                        <a href="{% url 'prodotto:prodotto_update' pk=l.id %}" class="alert-link">Modifica questo prodotto</a>
+                    </div>
+                  <div class="alert alert-danger" role="alert">
+                        <a href="{% url 'prodotto:prodotto_delete' pk=l.id %}" class="alert-link">Elimina questo prodotto</a>
+                    </div>
+
+              </div>
+    {% endif %}
+
+
+{% empty %}
+    {% if  user.is_authenticated    %}
+    <div class="card" style="width: 18rem;">
+
+      <a href="{% url 'prodotto:prodotto_create' %}" class="hover-link" >metti in vendita il tuo primo articolo !</a>
+
+    </div>s
+    {% endif %}
+{% endfor %}
+{% endblock %}
