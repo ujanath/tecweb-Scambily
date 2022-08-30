@@ -9,7 +9,7 @@
 
 {% for l in object_list   %}
 
-    {% if l.disponibilita == True %}
+    {% if l.disponibilita == True and l.user%}
                  <div class="card" style="width: 40rem;">
 
 
@@ -30,14 +30,12 @@
                   <li class="list-group-item">stato del articolo   : {{l.stato_articolo}}</li>
 
                 </ul>
-                  <div class="alert alert-warning" role="alert">
-                        <a href="{% url 'prodotto:prodotto_update' pk=l.id %}" class="alert-link">Modifica questo prodotto</a>
-                    </div>
-                  <div class="alert alert-danger" role="alert">
-                        <a href="{% url 'prodotto:prodotto_delete' pk=l.id %}" class="alert-link">Elimina questo prodotto</a>
-                    </div>
 
-              </div>
+
+
+                <a  href="{% url 'prodotto:ordine_create' pk=l.id %}" type="button" class="btn btn-primary btn-lg btn-block">Odina questo Prodotto</a>
+
+
     {% endif %}
 
 
