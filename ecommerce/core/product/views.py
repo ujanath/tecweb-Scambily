@@ -58,6 +58,7 @@ class OrdineCreate(CreateView):
 
         self.object = form.save(commit=False)
         self.object.prodotto = prodotto
+        self.object.prodotto.field['disponibilita'] = False
         self.object.save()
         return super().form_valid(form)
 
