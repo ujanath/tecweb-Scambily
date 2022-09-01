@@ -56,9 +56,11 @@ class OrdineCreate(CreateView):
         form.instance.user = self.request.user
         prodotto =  Prodotto.objects.get(pk=self.kwargs['pk'])
 
+
+        print(prodotto.disponibilita)
         self.object = form.save(commit=False)
         self.object.prodotto = prodotto
-        self.object.prodotto.field['disponibilita'] = False
+        self.object.prodotto.sono_stato_comprato()
         self.object.save()
         return super().form_valid(form)
 
