@@ -30,6 +30,15 @@ scelta_stato_spedizione = (
     ('3', 'consegnato')
 )
 
+scelta_valutazione = (
+    ('1', 'pessimo'),
+    ('2', 'discreto'),
+    ('3', 'buono'),
+    ('4', 'molto buono'),
+    ('5', 'perfetto')
+)
+
+
 class Prodotto(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     profilo = models.ForeignKey(Profilo, on_delete=models.CASCADE)  # il profilo fa da nucleo ai dati del
@@ -68,4 +77,12 @@ class Prodotto_ordine(models.Model):
     prodotto = models.OneToOneField(Prodotto, on_delete=models.CASCADE)
     dop = models.DateTimeField(default=timezone.now)
     indirizzo = models.CharField(max_length=100)
+
+class Prodotto_recensione(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    ordine = models.OneToOneField(Prodotto_ordine, on_delete=models.CASCADE)
+
+    dop = models.DateTimeField(default=timezone.now)
+    voto = models.DecimalField(max_digits=3, choices=scelta_valutazione)
+    descrizione = models.CharField(max_length=1000 , null=False)
 
