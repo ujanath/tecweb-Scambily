@@ -43,7 +43,7 @@
         </div>
         {%  else %}
          <div class="alert alert-info" role="alert">
-            <a href="#" class="alert-link">prodotto giá venduto segui l'oridne</a>
+            <a href={% url "prodotto:gestione_ordini" %} class="alert-link">prodotto giá venduto segui l'oridne</a>
         </div>
     {% endif %}
   </div>

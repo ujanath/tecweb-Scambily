@@ -12,6 +12,7 @@ urlpatterns = [
     path("delete/<int:pk>", login_required(DeleteProdotto.as_view()), name="prodotto_delete"),
     path("buy/<int:pk>", login_required(OrdineCreate.as_view()) , name ="ordine_create"),
     path("ordini", login_required(listaordine.as_view()), name="ordine_view"),
+    path("ordini_update/<int:pk>", login_required(aggiorna_ordine.as_view()), name="aggiorna_ordine"),
     path("gestione", login_required(gestione_ordini.as_view()), name="gestione_ordini"),
     path("info/<int:pk>", login_required(infoprodotto.as_view()), name="info_prodotto"),
 

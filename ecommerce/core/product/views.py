@@ -63,7 +63,7 @@ class OrdineCreate(CreateView):
         form.instance.user = self.request.user
         prodotto = Prodotto.objects.get(pk=self.kwargs['pk'])
 
-        print(prodotto.disponibilita)
+
         self.object = form.save(commit=False)
         self.object.prodotto = prodotto
         self.object.prodotto.sono_stato_comprato()
@@ -108,3 +108,22 @@ class gestione_ordini(ListView):
         lista = lista_prod.values_list('id', flat=True)
 
         return self.model.objects.filter(prodotto_id__in=lista)
+
+
+class aggiorna_ordine(ListView):
+    model = Prodotto_ordine
+    template_name = 'ordine_view.html'
+
+    def get_queryset(self):
+
+
+        update = get_object_or_404(Prodotto_ordine ,id=self.kwargs['pk'])
+
+        # posso cambiare se solo se sono quello che ha comprato e se stato spedito
+        if self.request.user == update.user and update.stato == 2:
+
+            update.eleva_spedizione()
+            update.save()
+
+        return self.model.objects.filter(user=self.request.user)
+

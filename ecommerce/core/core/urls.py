@@ -31,5 +31,6 @@ urlpatterns = [
 
     path("product/" , include("product.urls")),
     path("profilo/" , include("profilo.urls")),
-    path("portafoglio/" , include("portafoglio.urls"))
+    path("portafoglio/" , include("portafoglio.urls")),
+    path("messaggi/" , include("messaggi.urls")),
 ] + static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

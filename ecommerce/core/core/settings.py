@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'product',
     'crispy_forms',
     'portafoglio',
+    'messaggi',
 ]
 
 MIDDLEWARE = [

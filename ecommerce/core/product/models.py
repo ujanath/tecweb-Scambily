@@ -90,27 +90,10 @@ class Prodotto_ordine(models.Model):
             return 'consegnato'
         elif self.stato == 4:
             return 'reclamo'
-
+        elif self.stato == 5:
+            return 'rimborso effettuato'
 
     def ottieni_username(self):
         return self.user.username
 
 
-class Prodotto_recensione(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    ordine = models.OneToOneField(Prodotto_ordine, on_delete=models.CASCADE)
-
-    dop = models.DateTimeField(default=timezone.now)
-    voto = models.DecimalField(max_digits=3, decimal_places=1, choices=scelta_valutazione)
-    descrizione = models.CharField(max_length=1000, null=False)
-
-
-class Prodotto_segnalazione(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-
-    dop = models.DateTimeField(default=timezone.now)
-    ordine = models.OneToOneField(Prodotto_ordine, on_delete=models.CASCADE)
-    descrizione = models.CharField(max_length=1000, null=False)
-    prova_immagine_1 = models.ImageField(upload_to='segnalazioni/', null=True, blank=False)
-    prova_immagine_2 = models.ImageField(upload_to='segnalazioni/', null=True, blank=True)
-    prova_immagine_3 = models.ImageField(upload_to='segnalazioni/', null=True, blank=True)
