@@ -1,0 +1,35 @@
+{% extends "basebs.html" %}
+
+
+{% block title %} Lista Ordine{% endblock %}
+{% block content %}
+
+
+
+{% for l in object_list %}
+
+    <table>
+    <div class="media">
+        {%  if l.img %}
+  <img src="{{ l.img.url }}" alt="img" style="width:30%">
+        {% endif %}
+  <div class="media-body">
+    <h5 class="mt-0">messaggio inviato da {{ l.user_invio }} in data {{ l.dop }}</h5>
+    <p> {{ l.message }}</p>
+
+      <div class="btn-group" role="group" aria-label="Basic example">
+  <a class="btn btn-info" href="{% url 'messaggi:crea_msg' pk=l.user_invio_id %}" role="button">Rispondi a {{ l.user_invio }}</a>
+
+
+    </div>
+
+  </div>
+</div>
+    </table>
+
+{% empty %}
+    {% if  user.is_authenticated    %}
+        <h5 class="mt-0">Non hai mai ricevuto dei messaggi</h5>
+    {% endif %}
+{% endfor %}
+{% endblock %}
