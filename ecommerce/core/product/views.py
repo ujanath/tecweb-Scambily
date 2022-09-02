@@ -1,8 +1,8 @@
 from django.views.generic.list import ListView
-from django.views.generic.edit import CreateView, UpdateView , DeleteView
-from .models import Prodotto , Prodotto_ordine
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from .models import Prodotto, Prodotto_ordine
 from django.urls import reverse_lazy
-from .forms import ProdottoCreateForm , OrdineCreateForm
+from .forms import ProdottoCreateForm, OrdineCreateForm
 from django.shortcuts import get_object_or_404
 
 
@@ -23,6 +23,13 @@ class listaprodotto(ListView):
     def get_queryset(self):
         return self.model.objects.filter(user=self.request.user)
 
+
+class listaordine(ListView):
+    model = Prodotto_ordine
+    template_name = 'ordine_view.html'
+
+    def get_queryset(self):
+        return self.model.objects.filter(user=self.request.user)
 
 
 class ProdottoCreate(CreateView):
@@ -54,8 +61,7 @@ class OrdineCreate(CreateView):
 
     def form_valid(self, form):
         form.instance.user = self.request.user
-        prodotto =  Prodotto.objects.get(pk=self.kwargs['pk'])
-
+        prodotto = Prodotto.objects.get(pk=self.kwargs['pk'])
 
         print(prodotto.disponibilita)
         self.object = form.save(commit=False)
@@ -77,3 +83,28 @@ class listaprodottoall(ListView):
 
     def get_queryset(self):
         return self.model.objects.all()
+
+
+# TODO info prodotto ordinato
+class infoprodotto(ListView):
+    model = Prodotto
+    template_name = 'prodotto_info.html'
+
+    def get_queryset(self):
+        # controllo se esiste un ordine fatto da questo user per il prodotto che controllo
+        check = Prodotto_ordine.objects.filter(user_id=self.request.user, prodotto_id=self.kwargs['pk'])
+        if check:
+            return self.model.objects.filter(pk=self.kwargs['pk'])
+
+        if get_object_or_404(Prodotto, id=self.kwargs['pk']).user.username == self.request.user.username :
+            return self.model.objects.filter(pk=self.kwargs['pk'])
+
+class gestione_ordini(ListView):
+    model = Prodotto_ordine
+    template_name = 'gestione_ordini.html'
+
+    def get_queryset(self):
+        lista_prod = Prodotto.objects.filter(user_id=self.request.user, disponibilita=False)
+        lista = lista_prod.values_list('id', flat=True)
+
+        return self.model.objects.filter(prodotto_id__in=lista)

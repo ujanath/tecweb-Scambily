@@ -1,7 +1,7 @@
 {% extends "basebs.html" %}
 
 
-{% block title %} lista di tutti i prodotti{% endblock %}
+{% block title %} lista di tutti i prodotti user.get_username {% endblock %}
 {% block content %}
 
 
@@ -9,7 +9,7 @@
 
 {% for l in object_list   %}
 
-    {% if l.disponibilita == True and l.user%}
+    {% if l.disponibilita == True and  request.user != l.user   %}
                  <div class="card" style="width: 40rem;">
 
 

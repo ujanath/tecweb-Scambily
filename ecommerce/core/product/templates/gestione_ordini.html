@@ -1,0 +1,30 @@
+{% extends "basebs.html" %}
+
+
+{% block title %} Lista Ordine{% endblock %}
+{% block content %}
+
+<table class="table">
+        <th>ordine numero </th>
+        <th>ordinato da  </th>
+        <th>nome prodotto </th>
+        <th>info prodotto </th>
+        <th>stato prodotto </th>
+
+        <tr>
+{% for l in object_list %}
+
+                <td>{{ l.id }}</td>
+                <td>{{ l.ottieni_username}}</td>
+                <td>{{l.prodotto.nome}}</td>
+                <td><a href="{% url 'prodotto:info_prodotto' pk=l.prodotto.id %}">info prodotto</a></td>
+                <td>{{l.controlla_stato}}</td>
+
+        </tr>
+    </table>
+{% empty %}
+    {% if  user.is_authenticated    %}
+
+    {% endif %}
+{% endfor %}
+{% endblock %}

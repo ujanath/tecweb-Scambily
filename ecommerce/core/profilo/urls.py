@@ -10,5 +10,6 @@ app_name= "profilo"
 urlpatterns = [
     path("" , login_required(listaprofilo.as_view()) , name = "profilo_view" ),  # lista di prodotti del tuo user
     path("create" , login_required(ProfiloCreate.as_view()), name = "profilo_create"),
-     path("<int:pk>" , login_required(ProfiloUpdate.as_view()), name = "profilo_update")
+    path("<int:pk>" , login_required(ProfiloUpdate.as_view()), name = "profilo_update"),
+    path("message/view" ,login_required(ProfiloCreate.as_view()), name = "profilo_create"),
 ]

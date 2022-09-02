@@ -1,19 +1,12 @@
 {% extends "basebs.html" %}
 
 
-{% block title %} il tuo Profilo{% endblock %}
+{% block title %} info prodotto{% endblock %}
 {% block content %}
-
-
-   <div class="alert alert-success" role="alert">
-            <a href="{% url 'prodotto:prodotto_create'%}" class="alert-link">clicca qui,se vuoi vendere qualcosa  </a>
-   </div>
-
-
 
 {% for l in object_list %}
 <div class="card" style="width: 40rem;">
-     
+
 
 
     <img src="{{ l.immagine_copertina.url }}" alt="immagine_copertina" style="width:100%">
@@ -32,31 +25,10 @@
       <li class="list-group-item">stato del articolo   : {{l.stato_articolo}}</li>
 
 
-    {% if l.disponibilita == True %}
-    </ul>
-      <div class="alert alert-warning" role="alert">
-            <a href="{% url 'prodotto:prodotto_update' pk=l.id %}" class="alert-link">Modifica questo prodotto </a>
-
-        </div>
-      <div class="alert alert-danger" role="alert">
-            <a href="{% url 'prodotto:prodotto_delete' pk=l.id %}" class="alert-link" >Elimina questo prodotto</a>
-        </div>
-        {%  else %}
-         <div class="alert alert-info" role="alert">
-            <a href="#" class="alert-link">prodotto giá venduto segui l'oridne</a>
-        </div>
-    {% endif %}
-  </div>
-
-
 
 {% empty %}
     {% if  user.is_authenticated    %}
-    <div class="card" style="width: 18rem;">
 
-      <a href="{% url 'prodotto:prodotto_create' %}" class="hover-link" >metti in vendita il tuo primo articolo !</a>
-
-    </div>s
     {% endif %}
 {% endfor %}
 {% endblock %}

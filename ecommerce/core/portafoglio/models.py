@@ -19,4 +19,6 @@ class metodo_pagamento_carta(models.Model):
             field_values.append(str(getattr(self, field.name, '')))
         return ' '.join(field_values)
 
+    def ultime_tre_cifre(self):
+        return 'finisce per *' + (str(self.carta_codice))[-3:]
 

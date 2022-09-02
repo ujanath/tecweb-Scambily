@@ -1,12 +1,13 @@
 from django.db import models
 from django.contrib.auth.models import User
-from profilo.models import *
-from portafoglio.models import *
 from django.utils import timezone
 
 # Create your models here.
 
 # TODO aggiungere piú stati dei articoli
+from portafoglio.models import metodo_pagamento_carta
+from profilo.models import Profilo
+
 scelta_stato = (
     ('nu', "nuovo"),
     ('pr', "come nuovo"),
@@ -24,11 +25,6 @@ scelta_categorie = (
     ('model', 'modellini')
 
 )
-scelta_stato_spedizione = (
-    ('1', 'in sviluppo'),
-    ('2', 'spedito'),
-    ('3', 'consegnato')
-)
 
 scelta_valutazione = (
     ('1', 'pessimo'),
@@ -43,11 +39,10 @@ class Prodotto(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     profilo = models.ForeignKey(Profilo, on_delete=models.CASCADE)  # il profilo fa da nucleo ai dati del
 
-
     immagine_copertina = models.ImageField(upload_to='products/', null=True, blank=True)
     nome = models.CharField(max_length=50)
     prezzo = models.DecimalField(max_digits=8, decimal_places=2)
-    stato_articolo =stato_articolo = models.CharField(max_length=2, choices=scelta_stato)
+    stato_articolo = stato_articolo = models.CharField(max_length=2, choices=scelta_stato)
     descrizione = models.CharField(max_length=1000)
     disponibilita = models.BooleanField(default='True')
     categoria = models.CharField(max_length=5, choices=scelta_categorie)
@@ -65,10 +60,11 @@ class Prodotto(models.Model):
     class Meta:
         verbose_name_plural = "Prodotti"
 
+
 class Prdotto_Tag(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     prodotto = models.ForeignKey(Prodotto, on_delete=models.CASCADE)
-    tag = models.CharField(max_length=100 , null= False)
+    tag = models.CharField(max_length=100, null=False)
 
 
 class Prodotto_ordine(models.Model):
@@ -77,12 +73,44 @@ class Prodotto_ordine(models.Model):
     prodotto = models.OneToOneField(Prodotto, on_delete=models.CASCADE)
     dop = models.DateTimeField(default=timezone.now)
     indirizzo = models.CharField(max_length=100)
+    stato = models.IntegerField(default=1)
+
+    def eleva_spedizione(self):
+        if self.stato == 1:
+            self.stato = 2
+        elif self.stato == 2:
+            self.stato = 3
+
+    def controlla_stato(self):
+        if self.stato == 1:
+            return 'in sviluppo'
+        elif self.stato == 2:
+            return 'spedito'
+        elif self.stato == 3:
+            return 'consegnato'
+        elif self.stato == 4:
+            return 'reclamo'
+
+
+    def ottieni_username(self):
+        return self.user.username
+
 
 class Prodotto_recensione(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     ordine = models.OneToOneField(Prodotto_ordine, on_delete=models.CASCADE)
 
     dop = models.DateTimeField(default=timezone.now)
-    voto = models.DecimalField(max_digits=3, choices=scelta_valutazione)
-    descrizione = models.CharField(max_length=1000 , null=False)
+    voto = models.DecimalField(max_digits=3, decimal_places=1, choices=scelta_valutazione)
+    descrizione = models.CharField(max_length=1000, null=False)
 
+
+class Prodotto_segnalazione(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    dop = models.DateTimeField(default=timezone.now)
+    ordine = models.OneToOneField(Prodotto_ordine, on_delete=models.CASCADE)
+    descrizione = models.CharField(max_length=1000, null=False)
+    prova_immagine_1 = models.ImageField(upload_to='segnalazioni/', null=True, blank=False)
+    prova_immagine_2 = models.ImageField(upload_to='segnalazioni/', null=True, blank=True)
+    prova_immagine_3 = models.ImageField(upload_to='segnalazioni/', null=True, blank=True)
