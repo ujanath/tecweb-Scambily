@@ -41,11 +41,7 @@
 
 {% empty %}
     {% if  user.is_authenticated    %}
-    <div class="card" style="width: 18rem;">
 
-      <a href="{% url 'prodotto:prodotto_create' %}" class="hover-link" >metti in vendita il tuo primo articolo !</a>
-
-    </div>
 
     {% endif %}
 {% endfor %}

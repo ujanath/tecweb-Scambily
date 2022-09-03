@@ -34,15 +34,6 @@ scelta_valutazione = (
     ('5', 'perfetto')
 )
 
-class Tag_list(models.Model):
-    def default(self):
-        return self.tags.filter(default=True).first()
-
-class Tag(models.Model):
-    noame_tag = models.CharField(max_length=50)
-    tag_list = models.ForeignKey(Tag_list, related_name='tags', on_delete=models.CASCADE)
-
-
 
 class Prodotto(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -55,7 +46,7 @@ class Prodotto(models.Model):
     descrizione = models.CharField(max_length=1000)
     disponibilita = models.BooleanField(default='True')
     categoria = models.CharField(max_length=5, choices=scelta_categorie)
-    tag_list = models.OneToOneField( Tag_list , related_name='lsita_tags' , on_delete=models.CASCADE )
+
 
     def sono_stato_comprato(self):
         self.disponibilita = False
