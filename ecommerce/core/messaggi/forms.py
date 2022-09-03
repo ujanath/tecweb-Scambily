@@ -19,3 +19,16 @@ class  MessaggioCreateForm(forms.ModelForm):
 
 
 
+class  recensioneForm(forms.ModelForm):
+    class Meta:
+        model = recensione
+
+        fields = [ 'descrizione' , 'voto' ]
+
+
+    #TODO implementare la lista prodotti quando crei un messaggio
+
+    def __init__(self, *args, **kwargs):
+
+            super().__init__(*args, **kwargs)
+

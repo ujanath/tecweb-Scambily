@@ -35,7 +35,7 @@
 
                 <a  href="{% url 'prodotto:ordine_create' pk=l.id %}" type="button" class="btn btn-primary btn-lg btn-block">Odina questo Prodotto</a>
 
-
+                 </div>
     {% endif %}
 
 
@@ -45,7 +45,8 @@
 
       <a href="{% url 'prodotto:prodotto_create' %}" class="hover-link" >metti in vendita il tuo primo articolo !</a>
 
-    </div>s
+    </div>
+
     {% endif %}
 {% endfor %}
 {% endblock %}

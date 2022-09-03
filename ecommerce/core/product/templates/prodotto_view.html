@@ -30,10 +30,20 @@
       <li class="list-group-item">prezzo   : {{l.profilo.indirizzo}}</li>
       <li class="list-group-item">descrizione   : {{l.descrizione}}</li>
       <li class="list-group-item">stato del articolo   : {{l.stato_articolo}}</li>
+</ul>
 
+     <div class="alert alert-success" role="alert">
+            <a href="{% url 'prodotto:aggiungi_tag' pk=l.id %}" class="alert-link">Aggiungi tag a questo Prodotto </a>
+
+        </div>
+
+    <div class="alert alert-success" role="alert">
+            <a href="{% url 'prodotto:lista_tag' pk=l.id %}" class="alert-link">guarda la lista di tag aggiunti </a>
+
+    </div>
 
     {% if l.disponibilita == True %}
-    </ul>
+
       <div class="alert alert-warning" role="alert">
             <a href="{% url 'prodotto:prodotto_update' pk=l.id %}" class="alert-link">Modifica questo prodotto </a>
 

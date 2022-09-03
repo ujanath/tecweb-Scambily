@@ -21,8 +21,10 @@ class recensione(models.Model):
     ordine = models.OneToOneField(Prodotto_ordine, on_delete=models.CASCADE)
 
     dop = models.DateTimeField(default=timezone.now)
-    voto = models.DecimalField(max_digits=3, decimal_places=1, choices=scelta_valutazione)
+    voto = models.CharField( max_length= 20 , choices=scelta_valutazione)
     descrizione = models.CharField(max_length=1000, null=False)
+
+
 
 
 

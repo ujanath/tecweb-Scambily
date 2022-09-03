@@ -16,5 +16,8 @@ urlpatterns = [
     path("gestione", login_required(gestione_ordini.as_view()), name="gestione_ordini"),
     path("info/<int:pk>", login_required(infoprodotto.as_view()), name="info_prodotto"),
 
+    path('tag_create/<int:pk>' , login_required(tag_create.as_view()), name="tag_create"),
+    path('tag_list/<int:pk>' , login_required(tag_list.as_view()), name="tag_list"),
+
 
 ]

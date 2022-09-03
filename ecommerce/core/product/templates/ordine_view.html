@@ -26,6 +26,11 @@
                     {% if l.controlla_stato == 'spedito' %}
                     <a class="btn btn-info" href="{% url 'prodotto:aggiorna_ordine' pk=l.id %}" role="button">hai ricevuto il pacco segnalalo ?</a>
                     {% endif %}
+
+                 {% if l.controlla_stato == 'consegnato' %}
+
+                    <a class="btn btn-success" href="{% url 'messaggi:crea_rec' pk=l.id %}" role="button">lascia una recensione ! </a>
+                    {% endif %}
                 </td>
 
 

@@ -35,6 +35,7 @@ scelta_valutazione = (
 )
 
 
+
 class Prodotto(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     profilo = models.ForeignKey(Profilo, on_delete=models.CASCADE)  # il profilo fa da nucleo ai dati del
@@ -42,7 +43,7 @@ class Prodotto(models.Model):
     immagine_copertina = models.ImageField(upload_to='products/', null=True, blank=True)
     nome = models.CharField(max_length=50)
     prezzo = models.DecimalField(max_digits=8, decimal_places=2)
-    stato_articolo = stato_articolo = models.CharField(max_length=2, choices=scelta_stato)
+    stato_articolo = models.CharField(max_length=2, choices=scelta_stato)
     descrizione = models.CharField(max_length=1000)
     disponibilita = models.BooleanField(default='True')
     categoria = models.CharField(max_length=5, choices=scelta_categorie)
@@ -60,11 +61,12 @@ class Prodotto(models.Model):
     class Meta:
         verbose_name_plural = "Prodotti"
 
-
 class Prdotto_Tag(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     prodotto = models.ForeignKey(Prodotto, on_delete=models.CASCADE)
     tag = models.CharField(max_length=100, null=False)
+
+
 
 
 class Prodotto_ordine(models.Model):

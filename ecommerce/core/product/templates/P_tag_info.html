@@ -1,0 +1,20 @@
+{% extends "basebs.html" %}
+
+
+{% block title %} info prodotto{% endblock %}
+{% block content %}
+
+
+{% for l in object_list %}
+    {{ l.tag }}
+
+
+
+
+
+{% empty %}
+    {% if  user.is_authenticated    %}
+
+    {% endif %}
+{% endfor %}
+{% endblock %}
