@@ -4,17 +4,36 @@
 {% block title %} info prodotto{% endblock %}
 {% block content %}
 
+<table class="table">
+<thead>
+    <tr>
+      <th scope="nome prodotto">#</th>
+      <th scope="tag assegnato">First</th>
+      <th scope="elimina questo tag">Last</th>
 
+    </tr>
+  </thead>
 {% for l in object_list %}
-    {{ l.tag }}
 
+
+  <tbody>
+    <tr>
+
+      <td>{{ l.prodotto.nome }}</td>
+      <td>{{ l.tag }}</td>
+      <td><a href="{% url 'prodotto:tag_eliminate' pk=l.id %}" class="badge badge-danger">Elimina questo tag</a>
+          </td>
+    </tr>
+
+  </tbody>
 
 
 
 
 {% empty %}
     {% if  user.is_authenticated    %}
-
+        <h6> non sta niente</h6>
     {% endif %}
 {% endfor %}
+  </table>
 {% endblock %}

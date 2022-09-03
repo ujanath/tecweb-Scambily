@@ -1,3 +1,4 @@
+from django.http import HttpResponse
 from django.views.generic.list import ListView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from .models import *
@@ -40,5 +41,12 @@ class CreateCarta(CreateView):
 
     def form_valid(self, form):
         form.instance.user = self.request.user
-        return super().form_valid(form)
-
+        controllo = str(form.instance.carta_codice)
+        controllo_cvv = str(form.instance.carta_CVV)
+        print(controllo)
+        if len(controllo) == 16 and len(controllo_cvv) == 3: #Controllo minimo
+            return super().form_valid(form)
+        else:
+            return HttpResponse("ERROR: il codice di una carta deve essere di 16 cifre e il CVV di 3 !")
+        #TODO: controllo se la carta é giá stata inserita per evitare doppioni, ma siccome e una cosa fittizzia
+        # verrá fatta se ho tempo

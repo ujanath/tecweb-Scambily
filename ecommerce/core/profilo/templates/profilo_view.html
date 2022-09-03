@@ -18,7 +18,7 @@
       <p class="card-text">{{l.bio }} </p>
     </div>
     <ul class="list-group list-group-flush">
-      <li class="list-group-item">regione  : {{l.regione}}</li>
+      <li class="list-group-item">regione  : {{l.get_regione_display}}</li>
       <li class="list-group-item">citta    : {{l.cap}}</li>
       <li class="list-group-item">cap      : {{l.citta}}</li>
       <li class="list-group-item">indirizzo: {{l.indirizzo}}</li>
@@ -26,9 +26,7 @@
     </ul>
     <div class="card-body">
 
-      <a href="{% url 'profilo:profilo_update' pk=l.id %}" class="hover-link" >Modifca qui il tuo profilo !</a>
 
-            <a href="{% url 'portafoglio:lista_carte' %}" class="hover-link" >il tuo pagamento con carta </a>
 
     </div>
 

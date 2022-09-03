@@ -66,3 +66,11 @@ class vedi_messaggio(ListView):
 
     def get_queryset(self):
         return self.model.objects.filter(user_ricevi=self.request.user)
+
+class vedi_recensione(ListView):
+    model = Messaggi
+
+    template_name = 'rec_view'
+
+    def get_queryset(self):
+        return self.model.objects.filter(ordine_i=self.kwargs['pk'])

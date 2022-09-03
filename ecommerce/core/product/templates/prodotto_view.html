@@ -16,7 +16,7 @@
      
 
 
-    <img src="{{ l.immagine_copertina.url }}" alt="immagine_copertina" style="width:100%">
+    <img src="{{ l.immagine_copertina.url }}" alt="immagine_copertina" style="width:50%">
 
     <div class="card-body">
       <h5 class="card-title">prodotti di  {{l.user.username}}</h5>
@@ -29,16 +29,16 @@
       <li class="list-group-item">cap del venditore     : {{l.profilo.citta}}</li>
       <li class="list-group-item">prezzo   : {{l.profilo.indirizzo}}</li>
       <li class="list-group-item">descrizione   : {{l.descrizione}}</li>
-      <li class="list-group-item">stato del articolo   : {{l.stato_articolo}}</li>
+      <li class="list-group-item">stato del articolo   : {{l.get_stato_articolo_display}}</li>
 </ul>
 
      <div class="alert alert-success" role="alert">
-            <a href="{% url 'prodotto:aggiungi_tag' pk=l.id %}" class="alert-link">Aggiungi tag a questo Prodotto </a>
+            <a href="{% url 'prodotto:tag_create' pk=l.id %}" class="alert-link">Aggiungi tag a questo Prodotto </a>
 
         </div>
 
     <div class="alert alert-success" role="alert">
-            <a href="{% url 'prodotto:lista_tag' pk=l.id %}" class="alert-link">guarda la lista di tag aggiunti </a>
+            <a href="{% url 'prodotto:tag_list' pk=l.id %}" class="alert-link">guarda la lista di tag aggiunti </a>
 
     </div>
 

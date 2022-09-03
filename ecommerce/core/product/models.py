@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
-
+from django.template import RequestContext
 # Create your models here.
 
 # TODO aggiungere piú stati dei articoli
@@ -33,6 +33,7 @@ scelta_valutazione = (
     ('4', 'molto buono'),
     ('5', 'perfetto')
 )
+
 
 
 class Prodotto(models.Model):

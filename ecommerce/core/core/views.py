@@ -13,3 +13,9 @@ class UserCreateView(CreateView):
     template_name = "user_create.html"
     success_url = reverse_lazy("home")
 
+
+# class StaffCreateView(CreateView):
+#     #form_class = UserCreationForm
+#     form_class = CreaUtenteStaff
+#     template_name = "staff_create.html"
+#     success_url = reverse_lazy("home")

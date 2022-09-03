@@ -4,6 +4,8 @@
 {% block title %} Lista Ordine{% endblock %}
 {% block content %}
 
+
+{% for l in object_list %}
 <table class="table">
         <th>ordine numero </th>
         <th>ordinato da  </th>
@@ -13,8 +15,6 @@
         <th>gestione </th>
 
         <tr>
-{% for l in object_list %}
-
                 <td>{{ l.id }}</td>
                 <td>{{ l.ottieni_username}}</td>
                 <td>{{l.prodotto.nome}}</td>
@@ -32,7 +32,7 @@
     </table>
 {% empty %}
     {% if  user.is_authenticated    %}
-
+        <h5> non hai Ordinato nulla perche non provi ad andare alle raccomandazioni ?</h5>
     {% endif %}
 {% endfor %}
 {% endblock %}

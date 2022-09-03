@@ -1,11 +1,11 @@
 from django.db import OperationalError
-from django.http import HttpResponse
+from django.http import HttpResponse , HttpResponseRedirect
 from django.views.generic.list import ListView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from .models import *
 from django.urls import reverse_lazy
-from .forms import ProdottoCreateForm, OrdineCreateForm , TagCreateForm
-from django.shortcuts import get_object_or_404
+from .forms import *
+from django.shortcuts import get_object_or_404, render , redirect
 
 
 # Create your views here.
@@ -46,6 +46,7 @@ class ProdottoCreate(CreateView):
         return kwargs
 
     def form_valid(self, form):
+        form.instance.profilo = Profilo.objects.get(user=self.request.user)
         form.instance.user = self.request.user
         return super().form_valid(form)
 
@@ -65,7 +66,6 @@ class OrdineCreate(CreateView):
         form.instance.user = self.request.user
         prodotto = Prodotto.objects.get(pk=self.kwargs['pk'])
 
-
         self.object = form.save(commit=False)
         self.object.prodotto = prodotto
         self.object.prodotto.sono_stato_comprato()
@@ -75,6 +75,12 @@ class OrdineCreate(CreateView):
 
 class DeleteProdotto(DeleteView):
     model = Prodotto
+    template_name = 'delete.html'
+    success_url = reverse_lazy("prodotto:prodotto_view")
+
+
+class tag_eliminate(DeleteView):
+    model = Prdotto_Tag
     template_name = 'delete.html'
     success_url = reverse_lazy("prodotto:prodotto_view")
 
@@ -90,7 +96,7 @@ class listaprodottoall(ListView):
             return self.model.objects.all()
 
         except OperationalError:
-                return HttpResponse("ERROR")
+            return HttpResponse("ERROR")
 
 
 # TODO info prodotto ordinato
@@ -104,8 +110,9 @@ class infoprodotto(ListView):
         if check:
             return self.model.objects.filter(pk=self.kwargs['pk'])
 
-        if get_object_or_404(Prodotto, id=self.kwargs['pk']).user.username == self.request.user.username :
+        if get_object_or_404(Prodotto, id=self.kwargs['pk']).user.username == self.request.user.username:
             return self.model.objects.filter(pk=self.kwargs['pk'])
+
 
 class gestione_ordini(ListView):
     model = Prodotto_ordine
@@ -124,12 +131,10 @@ class aggiorna_ordine(ListView):
 
     def get_queryset(self):
 
-
-        update = get_object_or_404(Prodotto_ordine ,id=self.kwargs['pk'])
+        update = get_object_or_404(Prodotto_ordine, id=self.kwargs['pk'])
 
         # posso cambiare se solo se sono quello che ha comprato e se stato spedito
         if self.request.user == update.user and update.stato == 2:
-
             update.eleva_spedizione()
             update.save()
 
@@ -161,6 +166,8 @@ class tag_create(CreateView):
         prodotto = Prodotto.objects.get(pk=self.kwargs['pk'])
         self.object = form.save(commit=False)
         self.object.prodotto = prodotto
+        upper = str(form.instance.tag).upper()
+        self.object.tag = upper
         self.object.save()
         return super().form_valid(form)
 
@@ -170,5 +177,58 @@ class tag_list(ListView):
     template_name = 'P_tag_info.html'
 
     def get_queryset(self):
-        return self.model.objects.filter(pk=self.kwargs['pk'])
+        return self.model.objects.filter(prodotto_id=self.kwargs['pk'])
+
+
+# una ricerca e una vista quindi
+
+
+def search(request):
+
+    if request.method == "POST":
+        form = SearchForm(request.POST)
+        if form.is_valid():
+            sstring = form.cleaned_data.get("search_string")
+            where = form.cleaned_data.get("search_where")
+            return redirect("prodotto:searchresult", sstring, where)
+    else:
+        form = SearchForm()
+
+    return render(request,template_name="searchpage.html",context={"form":form})
+
+
+
+class SearchResultList(ListView):
+
+    model = Prodotto
+    template_name = "prodotto_view_all.html"
+    def get_queryset(self):
+        sstring = self.request.resolver_match.kwargs["sstring"]
+        where = self.request.resolver_match.kwargs["where"]
+
+        if "nome" in where:
+            qq = Prodotto.objects.filter(nome__icontains=sstring)
+        elif "tag" in where:
+            lista = Prdotto_Tag.objects.filter(tag__icontains=sstring)
+            qq = Prodotto.objects.filter(id__in=lista)
+            #todo da mettere apposto
+        elif 'descrizione':
+            qq = Prodotto.objects.filter(descrizione__icontains=sstring)
+
+
+        return qq
+
+class raccomanda(ListView):
+    model = Prodotto
+    template_name = 'prodotto_view_all.html'
+
+    def get_queryset(self):
+
+        try:
+
+            return self.model.objects.all()
+
+        except OperationalError:
+            return HttpResponse("ERROR")
+
 

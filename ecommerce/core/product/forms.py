@@ -8,7 +8,6 @@ class ProdottoCreateForm(forms.ModelForm):
     class Meta:
         model = Prodotto
         fields = [ 'nome',
-                   'profilo',
                    'immagine_copertina',
                    'prezzo',
                    'stato_articolo',
@@ -20,9 +19,7 @@ class ProdottoCreateForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         user = kwargs.pop('user', None)
         super().__init__(*args, **kwargs)
-        self.fields['profilo'].queryset = self.fields['profilo'].queryset.filter(user=user)
-        self.fields['profilo'].label =\
-            "conferma il tuo Luogo di residenza , se non vedi nulla é perche non hai creato il uo profilo"
+
 
 
 
@@ -47,5 +44,13 @@ class  TagCreateForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         user = kwargs.pop('user', None)
         super().__init__(*args, **kwargs)
-        self.fields['carta'].queryset = self.fields['carta'].queryset.filter(user=user)
+    
 
+class SearchForm(forms.Form):
+
+    CHOICE_LIST = [("nome" , "Nome del Prodotto"),
+                   ("descrizione","descrizione del prodotto"),
+                   ("tag" , "vuoi cercare con un tag speciale")]
+
+    search_string = forms.CharField(label="cosa devo cercare" , max_length= 100, min_length= 3 , required=True)
+    search_where = forms.ChoiceField(label="cercare dove ? " , required=True , choices=CHOICE_LIST)
