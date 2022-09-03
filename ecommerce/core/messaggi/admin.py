@@ -5,5 +5,6 @@ from .models import *
 
 # Register your models here.
 admin.site.register(Messaggi)
+admin.site.register(recensione)
 
 

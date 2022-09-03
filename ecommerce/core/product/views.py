@@ -125,5 +125,15 @@ class aggiorna_ordine(ListView):
             update.eleva_spedizione()
             update.save()
 
-        return self.model.objects.filter(user=self.request.user)
+            return self.model.objects.filter(user=self.request.user)
+
+        if self.request.user == update.prodotto.user and update.stato == 1:
+            update.eleva_spedizione()
+            update.save()
+
+            lista_prod = Prodotto.objects.filter(user_id=self.request.user, disponibilita=False)
+            lista = lista_prod.values_list('id', flat=True)
+
+            return self.model.objects.filter(prodotto_id__in=lista)
+
 

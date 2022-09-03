@@ -1,3 +1,5 @@
+from django.db import IntegrityError
+from django.http import HttpResponse
 from django.shortcuts import render
 from django.views.generic.detail import DetailView
 from django.views.generic.list import ListView
@@ -31,5 +33,8 @@ class ProfiloCreate(CreateView):
     # hack per perfezionisti con una deadline
     def form_valid(self, form):
         form.instance.user = self.request.user
-        return super().form_valid(form)
+        try:
+            return super().form_valid(form)
 
+        except IntegrityError:
+            return HttpResponse("ERROR: Profilo esiste giá !")
