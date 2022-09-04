@@ -17,7 +17,8 @@ scelta_valutazione = (
 )
 
 class recensione(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user_invio = models.ForeignKey(User, on_delete=models.CASCADE, related_name="user_invio_rec")
+    user_ricevi = models.ForeignKey(User, on_delete=models.CASCADE, related_name="user_ricevi_rec")
     ordine = models.OneToOneField(Prodotto_ordine, on_delete=models.CASCADE)
 
     dop = models.DateTimeField(default=timezone.now)
@@ -29,8 +30,7 @@ class recensione(models.Model):
 
 
 class segnalazione(models.Model):
-    user_invio = models.ForeignKey(User, on_delete=models.CASCADE , related_name="user_invio")
-    user_ricevi = models.ForeignKey(User, on_delete=models.CASCADE, related_name="user_ricevi")
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     dop = models.DateTimeField(default=timezone.now)
     ordine = models.OneToOneField(Prodotto_ordine, on_delete=models.CASCADE)

@@ -36,7 +36,7 @@
 
                 <a  href="{% url 'prodotto:ordine_create' pk=l.id %}" type="button" class="btn btn-primary btn-lg btn-block">Odina questo Prodotto</a>
                   <a class="btn btn-info" href="{% url 'messaggi:crea_msg' pk=l.user_id %}" role="button">manda un messaggio a {{ l.user.username }}</a>
-                                  <a class="btn btn-success" href="{% url 'messaggi:vedi_rec' pk=l.user_id %}" role="button">guarda le recensioni di {{ l.user.username }}</a>
+                                  <a class="btn btn-success" href="{% url 'messaggi:vedi_rec' pk=l.user_id  %}" role="button">guarda le recensioni di {{ l.user.username }}</a>
 
                  </div>
     {% endif %}

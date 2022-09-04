@@ -29,7 +29,7 @@
 
                  {% if l.controlla_stato == 'consegnato' %}
 
-                    <a class="btn btn-success" href="{% url 'messaggi:crea_rec' pk=l.id %}" role="button">lascia una recensione ! </a>
+                    <a class="btn btn-success" href="{% url 'messaggi:crea_rec' pk=l.id ricevi=l.prodotto.user_id %}" role="button">lascia una recensione ! </a>
                     {% endif %}
                 </td>
 

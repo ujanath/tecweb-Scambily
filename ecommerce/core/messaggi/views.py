@@ -42,12 +42,16 @@ class create_recensione(CreateView):
         return kwargs
 
     def form_valid(self, form):
-        form.instance.user = self.request.user
+        form.instance.user_invio = self.request.user
+
+        ricevi = User.objects.get(pk=self.kwargs['ricevi'])
         ordine = Prodotto_ordine.objects.get(pk=self.kwargs['pk'])
 
         self.object = form.save(commit=False)
+        self.object.user_ricevi = ricevi
         self.object.ordine = ordine
-
+        self.object.save()
+        return super().form_valid(form)
 
 
         try:
@@ -68,9 +72,9 @@ class vedi_messaggio(ListView):
         return self.model.objects.filter(user_ricevi=self.request.user)
 
 class vedi_recensione(ListView):
-    model = Messaggi
+    model = recensione
 
-    template_name = 'rec_view'
+    template_name = 'rec_view.html'
 
     def get_queryset(self):
-        return self.model.objects.filter(ordine_i=self.kwargs['pk'])
+        return self.model.objects.filter(user_ricevi=self.kwargs['pk'])

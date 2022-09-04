@@ -23,7 +23,7 @@ class  recensioneForm(forms.ModelForm):
     class Meta:
         model = recensione
 
-        fields = [ 'descrizione' , 'voto' ]
+        fields = [  'descrizione' , 'voto' ]
 
 
     #TODO implementare la lista prodotti quando crei un messaggio
