@@ -139,8 +139,7 @@ class aggiorna_ordine(ListView):
             update.save()
 
             return self.model.objects.filter(user=self.request.user)
-
-        if self.request.user == update.prodotto.user and update.stato == 1:
+        elif self.request.user == update.prodotto.user and update.stato == 1:
             update.eleva_spedizione()
             update.save()
 
@@ -209,7 +208,8 @@ class SearchResultList(ListView):
         if "nome" in where:
             qq = Prodotto.objects.filter(nome__icontains=sstring)
         elif "tag" in where:
-            lista = Prdotto_Tag.objects.filter(tag__icontains=sstring)
+            lista = Prdotto_Tag.objects.filter(tag__icontains=sstring).values_list('prodotto_id', flat=True)
+
             qq = Prodotto.objects.filter(id__in=lista)
             #todo da mettere apposto
         elif 'descrizione':
@@ -225,8 +225,17 @@ class raccomanda(ListView):
     def get_queryset(self):
 
         try:
+            # lista dei ordini fatti e ricevuti
+            ordini_fatti = Prodotto_ordine.objects.filter(user_id= self.request.user , stato='3').\
+                values_list('prodotto_id', flat = True)
 
-            return self.model.objects.all()
+            # tag dei prodotti comprati
+            lista_tag = Prdotto_Tag.objects.filter(prodotto__in = ordini_fatti).values_list('tag', flat = True)
+
+            lista_prodotti_da_tag = Prdotto_Tag.objects.filter(tag__in=lista_tag).values_list('prodotto_id', flat=True)
+
+            return Prodotto.objects.filter(id__in=lista_prodotti_da_tag)
+
 
         except OperationalError:
             return HttpResponse("ERROR")

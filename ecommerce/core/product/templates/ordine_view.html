@@ -23,7 +23,7 @@
                 <td>{{l.controlla_stato}}</td>
                 <td>
 
-                    {% if l.controlla_stato == 'spedito' %}
+                    {% if l.controlla_stato == 'spedito' and l.user == user %}
                     <a class="btn btn-info" href="{% url 'prodotto:aggiorna_ordine' pk=l.id %}" role="button">hai ricevuto il pacco segnalalo ?</a>
                     {% endif %}
 
